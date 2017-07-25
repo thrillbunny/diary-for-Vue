@@ -62,5 +62,5 @@ npm init -y
 
 # 安装依赖
 ```
-npm install express cookie-parser body-parser express-seeion connect-mongo connect-flash multer ejs mongoose debug bootstrap -S
+npm install express cookie-parser body-parser express-session connect-mongo connect-flash multer ejs mongoose debug bootstrap -S
 ```

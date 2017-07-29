@@ -12,16 +12,11 @@ let MongoStore=require('connect-mongo')(session);
 //执行express方法得到app
 let app=express();
 
-/*//1.设置模版引擎
-app.set('view engine','html');
-//2.设置模版的存放目录
-app.set('views',path.resolve('views'));
-//3.设置html类型的模版使用ejs来进行渲染
-app.engine('.html',require('ejs').__express);*/
 
 //把urlencoded格式的字符串转成json对象 req.body=请求体对象
-app.use(bodyParser.urlencoded({extended:true}));
-app.use(express.static(path.resolve('./node_modules')));
+app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.static(path.resolve('../node_modules')));
 app.use(express.static(path.resolve('./public')));
 
 //使用了此中间件之后，会在请求对象上多req.session属性
@@ -47,16 +42,16 @@ app.use((req,res,next)=>{
     //一旦读取之后，此消息就被销毁了
     //每次服务器接收到请求后，把会话对象中的user属性取出来赋给模版的数据对象
     res.locals.user=req.session.user;
-    res.locals.title='用户注册'; //真正渲染模版的对象
     next();
 });
 
 //用户路由
-/*let user=require('./routes/user');
-app.use('/user',user);*/
-/*//文章路由
-let article=require('./routes/article');
-app.use('/article',article);
+let user=require('./routes/user');
+app.use('/user',user);
+//日记路由
+let diary=require('./routes/diary');
+app.use('/user',diary);
+/*
 //放首页路由
 let index=require('./routes/index');
 app.use('/',index);*/

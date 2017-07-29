@@ -26,18 +26,20 @@ let CategorySchema=new mongoose.Schema({
 });
 let Category=conn.model('Category',CategorySchema);
 exports.Category=Category;
+*/
 
-//文章的骨架模型
-let ArticleSchema=new mongoose.Schema({
-    articleTitle:String,
-    articleContent:String,
+//日记的骨架模型
+let DiarySchema=new mongoose.Schema({
+    title:String,
+    content:String,
+    picture:String,
     //文章的分类
-    category:{type:ObjectId,ref:'Category'},
+    //category:{type:ObjectId,ref:'Category'},
     //创建时间类型是日期类型，默认值是Date.now，default默认值
     createAt:{type:Date,default:Date.now},
     //外键就是别人家的主键,
     //ObjectId 是主键 _id的类型，这个user属性是一个外键，引用的是User集合的主键
     author:{type:ObjectId,ref:'User'}
 });
-let Article=conn.model('Article',ArticleSchema);
-exports.Article=Article;*/
+let Diary=conn.model('Diary',DiarySchema);
+exports.Diary=Diary;

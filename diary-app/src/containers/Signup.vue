@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <form enctype="multipart/form-data">
+        <form enctype="multipart/form-data" class="content-scroll" @submit.prevent="onSubmit">
             <h2>注册</h2>
             <div>
                 <label for="inputUserName">用户名</label>
@@ -8,7 +8,7 @@
                         <span>
                             <i class="iconfont icon-people_fill"></i>
                         </span>
-                    <input type="text" id="inputUserName" placeholder="Username" name="username" required autofocus>
+                    <input type="text" id="inputUserName" placeholder="Username" name="username" required autofocus v-model="username">
                 </div>
             </div>
             <div >
@@ -17,7 +17,7 @@
                         <span>
                             <i class="iconfont icon-browse_fill"></i>
                         </span>
-                    <input type="password" id="inputPassword" placeholder="Password" name="password" required>
+                    <input type="password" id="inputPassword" placeholder="Password" name="password" required v-model="password">
                 </div>
             </div>
             <div>
@@ -26,7 +26,7 @@
                         <span>
                             <i class="iconfont icon-mail_fill"></i>
                         </span>
-                    <input type="email" id="inputEmail" placeholder="Email address" name="email" required>
+                    <input type="email" id="inputEmail" placeholder="Email address" name="email" required v-model="email">
                 </div>
             </div>
             <div>
@@ -35,7 +35,7 @@
                         <span>
                             <i class="iconfont icon-picture_fill"></i>
                         </span>
-                    <input type="file" id="inputAvatar" placeholder="Avatar" name="avatar" required>
+                    <input type="file" id="inputAvatar" name="avatar" required @change="onChange">
                 </div>
             </div>
             <div>
@@ -44,77 +44,113 @@
                 </div>
             </div>
         </form>
+        <Message></Message>
         <SignTab></SignTab>
     </div>
 </template>
 <script>
     import SignTab from '../components/SignTab.vue' ;
+    import Message from '../components/Message.vue' ;
+    import {userSignup} from '../api';
+    import {mapMutations} from 'vuex';
+    import * as types from '../vuex/mutation-types';
     export default {
         data() {
-            return {}
+            return {
+                username:'',
+                password:'',
+                email:'',
+                avatar:''
+            }
         },
         computed: {},
-        components: {SignTab},
-        methods: {}
+        components: {SignTab,Message},
+        methods: {
+            onChange($event){
+                //this.avatar = JSON.stringify($event.target.files[0]);
+                this.avatar = URL.createObjectURL($event.target.files[0]);
+            },
+            ...mapMutations([types.ADD_Message]),
+            onSubmit(){
+                userSignup({
+                    username:this.username,
+                    password:this.password,
+                    email:this.email,
+                    avatar:this.avatar
+                }).then((res)=>{
+                    if("success" in res.data){
+                        this[types.ADD_Message](res.data.success);
+                        this.$router.push('/signin');
+                    }
+                    else {
+                        this[types.ADD_Message](res.data.error);
+                        this.$router.replace('/signup');
+                        this.username=this.password=this.email="";
+                    }
+                },(err)=>{
+                    console.log(err);
+                })
+            }
+        }
     }
 </script>
 <style scoped lang="less">
 form{
     width: 80%;
-    margin-top: 70px;
+    margin-top: .2rem;
     margin-left: 10%;
     h2{
-        height: 50px;
-        line-height: 50px;
-        font-size: 35px;
-        margin-bottom: 20px;
+        height: .5rem;
+        line-height: .5rem;
+        font-size: .35rem;
+        margin-bottom: .2rem;
     }
     div{
         label{
             display: inline-block;
-            width: 48px;
-            font-size: 15px;
+            width: .48rem;
+            font-size: .15rem;
         }
         div{
             display: inline-block;
-            width: 278px;
+            width: 2.6rem;
             span{
-                margin-right: 5px;
+                margin-right: .05rem;
                 i{
-                    font-size: 20px;
+                    font-size: .2rem;
                 }
             }
             input{
                 outline: 1px solid #404040;
-                font-size: 16px;
-                width: 200px;
-                height: 30px;
+                font-size: .16rem;
+                width: 2rem;
+                height: .3rem;
             }
             input[type="file"] {
-                color: transparent;
-                width: 70px;
-                font-size: 14px;
+                /*color: transparent;*/
+                width: 2rem;
+                font-size: .14rem;
                 outline: none;
                 background-color: #63c0a1;
-                border-radius: 5px;
+                border-radius: .05rem;
             }
         }
     }
 }
 form>div{
-    line-height: 50px;
+    line-height: .5rem;
     border-bottom: 2px dashed dimgray;
 }
 form>div:last-child{
     border-bottom: none;
-    margin-top: 30px;
+    margin-top: .3rem;
     div{
         width: 80%;
         margin-left: 10%;
         button{
             width: 100%;
-            height: 40px;
-            font-size: 20px;
+            height: .4rem;
+            font-size: .2rem;
             background-color: #6bc1e6;
         }
     }

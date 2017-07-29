@@ -59,3 +59,15 @@ npm install express --save
 ```
 npm install cookie-parser body-parser express-session connect-mongo connect-flash multer ejs mongoose debug bootstrap -S
 ```
+
+### 启动服务器端
+sudo mongod
+### 启动客户端
+mongo
+再启动一个cmd
+
+### 关闭服务器
+```
+use admin
+db.shutdownServer()
+```

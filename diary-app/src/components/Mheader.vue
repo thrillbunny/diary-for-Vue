@@ -24,10 +24,11 @@
         top:0;
         left: 0;
         z-index: 10;
-        height: 40px;
+        height: .4rem;
         width: 100%;
         text-align: center;
-        line-height: 40px;
+        line-height: .4rem;
+        font-size: .18rem;
         background-color: #f1f1f1;
     }
 </style>

@@ -26,7 +26,7 @@
         bottom: -1px;
         left: 0;
         width: 100%;
-        height: 50px;
+        height: .5rem;
         display: flex;
         z-index: 10;
         background-color: #f1f1f1;
@@ -42,7 +42,7 @@
             align-items: center;
             justify-content: center;
             i{
-                font-size: 20px;
+                font-size: .2rem;
             }
         }
     }

@@ -27,6 +27,7 @@
             </div>
         </form>
         <Message></Message>
+        <p v-if="message" class="message">{{message}}</p>
         <SignTab></SignTab>
     </div>
 </template>
@@ -40,7 +41,8 @@
         data() {
             return {
                 username:'',
-                password:''
+                password:'',
+                message:''
             }
         },
         computed: {},
@@ -53,12 +55,12 @@
                     password:this.password,
                 }).then((res)=>{
                     if("error" in res.data){
-                        this[types.ADD_Message](res.data.error);
+                        this.message = res.data.error;
                         this.$router.replace('/signin');
                         this.username=this.password="";
                     }
                     else {
-                        this[types.ADD_Message](res.data.success);
+                        //this[types.ADD_Message](res.data.success);
                         this.$router.push('/user');
                     }
                 },(err)=>{
@@ -120,5 +122,16 @@
                 background-color: #6bc1e6;
             }
         }
+    }
+    p.message {
+        background-color: #e6b6bb;
+        text-align: center;
+        height: .3rem;
+        line-height: .3rem;
+        font-size: .16rem;
+        width: 80%;
+        position: fixed;
+        bottom: 1rem;
+        left: 10%;
     }
 </style>

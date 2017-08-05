@@ -32,7 +32,7 @@ exports.Category=Category;
 let DiarySchema=new mongoose.Schema({
     title:String,
     content:String,
-    picture:String,
+    picture:Object,
     //文章的分类
     //category:{type:ObjectId,ref:'Category'},
     //创建时间类型是日期类型，默认值是Date.now，default默认值

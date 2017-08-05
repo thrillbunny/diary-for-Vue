@@ -25,7 +25,8 @@
         line-height: .3rem;
         font-size: .16rem;
         width: 80%;
-        margin-left: 10%;
-        margin-top: 1rem;
+        position: fixed;
+        bottom: 1rem;
+        left: 10%;
     }
 </style>

@@ -2,12 +2,13 @@ let express=require('express');
 let router=express.Router();
 let {User} =require('../model');
 
-let multer=require('multer');
+let multer = require('multer');
 let upload=multer({dest:'./public'});
 //提交用户注册表单
 router.post('/signup',upload.single('avatar'),(req,res)=>{
     let user=req.body;
     //user.avatar=`/${req.body.avatar}`;
+    user.avatar=`http://localhost:9090/${req.file.filename}`;
     //找一个数据库里有没有跟自己用户名相同的用户
     User.findOne({username:user.username},(err,oldUser)=>{
         if(err) {

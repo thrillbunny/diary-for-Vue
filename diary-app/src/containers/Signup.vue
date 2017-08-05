@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <form enctype="multipart/form-data" class="content-scroll" @submit.prevent="onSubmit">
+        <form class="content-scroll" @submit.prevent="onSubmit">
             <h2>注册</h2>
             <div>
                 <label for="inputUserName">用户名</label>
@@ -35,7 +35,7 @@
                         <span>
                             <i class="iconfont icon-picture_fill"></i>
                         </span>
-                    <input type="file" id="inputAvatar" name="avatar" required @change="onChange">
+                    <input type="file" id="inputAvatar" name="avatar" required>
                 </div>
             </div>
             <div>
@@ -44,13 +44,12 @@
                 </div>
             </div>
         </form>
-        <Message></Message>
+        <p v-if="message" class="message">{{message}}</p>
         <SignTab></SignTab>
     </div>
 </template>
 <script>
     import SignTab from '../components/SignTab.vue' ;
-    import Message from '../components/Message.vue' ;
     import {userSignup} from '../api';
     import {mapMutations} from 'vuex';
     import * as types from '../vuex/mutation-types';
@@ -60,30 +59,31 @@
                 username:'',
                 password:'',
                 email:'',
-                avatar:''
+                avatar:'',
+                message:''
             }
         },
         computed: {},
-        components: {SignTab,Message},
+        components: {SignTab},
         methods: {
-            onChange($event){
+            /*onChange($event){
                 //this.avatar = JSON.stringify($event.target.files[0]);
                 this.avatar = URL.createObjectURL($event.target.files[0]);
-            },
+            },*/
             ...mapMutations([types.ADD_Message]),
             onSubmit(){
-                userSignup({
-                    username:this.username,
-                    password:this.password,
-                    email:this.email,
-                    avatar:this.avatar
-                }).then((res)=>{
+                let formData = new FormData();
+                formData.append('username', this.username);
+                formData.append('password', this.password);
+                formData.append('email', this.email);
+                formData.append('avatar', document.querySelector('#inputAvatar').files[0]);
+                userSignup(formData).then((res)=>{
                     if("success" in res.data){
                         this[types.ADD_Message](res.data.success);
                         this.$router.push('/signin');
                     }
                     else {
-                        this[types.ADD_Message](res.data.error);
+                        this.message = res.data.error;
                         this.$router.replace('/signup');
                         this.username=this.password=this.email="";
                     }
@@ -154,5 +154,16 @@ form>div:last-child{
             background-color: #6bc1e6;
         }
     }
+}
+p.message {
+    background-color: #e6b6bb;
+    text-align: center;
+    height: .3rem;
+    line-height: .3rem;
+    font-size: .16rem;
+    width: 80%;
+    position: fixed;
+    bottom: 1rem;
+    left: 10%;
 }
 </style>

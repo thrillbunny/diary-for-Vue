@@ -7,7 +7,7 @@
                     <p>
                         <img :src="item.author.avatar" alt="">
                         <span @click="showDetail(item._id)">{{item.title}}</span>
-                        <span>{{item.createAt.split('T')[0]+' '+item.createAt.split('T')[1].split('.')[0]}}</span>
+                        <span><!--{{item.createAt.split('T')[0]+' '+item.createAt.split('T')[1].split('.')[0]}}-->{{item.Localtime}}</span>
                     </p>
                     <p>{{item.content}}</p>
                     <p v-if="item.picture"><img :src="item.picture" alt="" class="picture"></p>
@@ -35,6 +35,7 @@
         created(){
             getDiaryList().then(res=>{
                 this.diaryList=res.data.reverse();
+                console.log(res.data);
             },(err)=>{
                 console.log(err);
             });
@@ -76,7 +77,7 @@
                 }
                 span:nth-child(3){
                     float: right;
-                    margin-right: .05rem;
+                    margin-right: .15rem;
                     font-size: .14rem;
                     margin-top: .08rem;
                     color: rgba(0,0,0,.3);

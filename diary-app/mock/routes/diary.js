@@ -41,6 +41,9 @@ router.post('/add',upload.single('picture'),(req,res)=>{
 router.get('/list',(req,res)=>{
     //populate把一个属性从ID变成此ID对应的对象
     Diary.find({author:req.session.user._id}).populate('author').exec((err,articles)=>{
+        articles.forEach((item)=> {
+            item.Localtime=item.createAt.toLocaleString();
+        });
         res.send(articles)//从模版根目录下面找
     });
 });

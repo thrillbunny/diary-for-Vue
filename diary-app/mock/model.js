@@ -39,7 +39,8 @@ let DiarySchema=new mongoose.Schema({
     createAt:{type:Date,default:Date.now},
     //外键就是别人家的主键,
     //ObjectId 是主键 _id的类型，这个user属性是一个外键，引用的是User集合的主键
-    author:{type:ObjectId,ref:'User'}
+    author:{type:ObjectId,ref:'User'},
+    Localtime:String
 });
 let Diary=conn.model('Diary',DiarySchema);
 exports.Diary=Diary;

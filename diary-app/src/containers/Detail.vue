@@ -18,10 +18,10 @@
                     <img :src="picture" alt="">
                 </p>
                 <p class="button">
-                    <button type="submit">修改</button>
-                    <button @click="delDiary(id)">移除</button>
+                    <input type="submit" value="修改">
                 </p>
             </form>
+            <button @click="delDiary(id)">移除</button>
             <p v-if="message" class="message">{{message}}</p>
         </div>
         <Tab></Tab>
@@ -63,6 +63,7 @@
                 delDiaryDetail(id).then(res=>{
                     console.log(res);
                     if ("success" in res.data) {
+                        console.log(res.data.success,1);
                         this[types.ADD_Message](res.data.success);
                         //this.message = res.data.success;
                         this.$router.push('/list');
@@ -90,6 +91,7 @@
                 formData.append('picture', picturePath);
                 upDateDiaryAPI(formData,id).then(res => {
                     if ("success" in res.data) {
+                        console.log(res.data.success,2);
                         this[types.ADD_Message](res.data.success);
                         //this.message = res.data.success;
                         this.$router.push('/list');
@@ -113,6 +115,7 @@
         width: 90%;
         margin-left: 5%;
         margin-top: .5rem;
+        margin-bottom: .5rem;
         overflow: hidden;
         p.picture {
             font-size: .12rem;
@@ -145,32 +148,25 @@
         p.button {
             height: .6rem;
             margin-top: .3rem;
-            button{
+            input{
                 width: .68rem;
                 height: .4rem;
                 font-size: .2rem;
                 color: #ffedf2;
                 float: right;
-            }
-            button:nth-child(1) {
                 background-color: #74a1bd;
                 margin-right: .2rem;
             }
-            button:nth-child(2) {
-                background-color: #d45f68;
-                margin-right: .1rem;
-            }
         }
     }
-    p.message {
-        background-color: #e6b6bb;
-        text-align: center;
-        height: .3rem;
-        line-height: .3rem;
-        font-size: .16rem;
-        width: 80%;
-        position: fixed;
-        bottom: 1rem;
-        left: 10%;
+    button{
+        width: .68rem;
+        height: .4rem;
+        font-size: .2rem;
+        color: #ffedf2;
+        background-color: #d45f68;
+        position: relative;
+        bottom: 1.1rem;
+        left: 2.1rem;
     }
 </style>

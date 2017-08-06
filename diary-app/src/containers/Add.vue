@@ -107,16 +107,4 @@
 
         }
     }
-
-    p.message {
-        background-color: #e6b6bb;
-        text-align: center;
-        height: .3rem;
-        line-height: .3rem;
-        font-size: .16rem;
-        width: 80%;
-        position: fixed;
-        bottom: 1rem;
-        left: 10%;
-    }
 </style>

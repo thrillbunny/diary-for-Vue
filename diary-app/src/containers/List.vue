@@ -35,7 +35,6 @@
         created(){
             getDiaryList().then(res=>{
                 this.diaryList=res.data.reverse();
-                console.log(res.data);
             },(err)=>{
                 console.log(err);
             });

@@ -1,73 +1,25 @@
-# diary-for-Vue
+# 前言
 基于Vue+Webpack+Mongodb的个人账号日记本项目，可实现纯文本及图文记录
-
-## 第一步 安装vue-cli
-```
-$ npm install -g vue-cli
-```
-
-## 第二步 创建项目
-```
-$ vue init webpack my-project
-```
-
-## containers是容器级组件 页面级组件
-* views
-* pages
-> 每个页面级 以名字大写开头
-
-## components 基础组件 可复用
-* base
-
-## 组件的特点 可维护 可复用
-## 使用less `npm install less less-loader --save-dev`
-
-## main.js最后会打包成js文件插入到index.html
-
-## 后台提供接口
-* vue+node 前后台分离 后端只需返回对应的数据
-* ／api/getSliders
-
-## axios
-* 不支持跨域，不支持jsonp，如果想支持需要再安装jsonp模块，别人写的模块
-```
-npm install axios --save
-```
-```
-axios.post().then(function(res){})
-```
-
-## vuex
-```
- npm install vuex --save
-
-```
-
-
-## 安装express
-```
-npm install express --save
-```
-
-## 使用请求体解析器
-```
- npm install body-parser --save
-
-```
-
-# 安装依赖
-```
-npm install cookie-parser body-parser express-session connect-mongo connect-flash multer ejs mongoose debug bootstrap -S
-```
-
-### 启动服务器端
-sudo mongod
-### 启动客户端
-mongo
-再启动一个cmd
-
-### 关闭服务器
-```
-use admin
-db.shutdownServer()
-```
+# 技术栈
+Vue+Vuex+vue-router+ES6/7+webpack+mongodb
+# 项目流程
+* 账号系统
+    * 注册页
+    * 登陆页
+* 日记本系统
+    * 笔记展示页
+    * 笔记本增加页面
+    * 笔记本内容更新页面
+# 技术实现
+* 账号系统的实现
+    * 注册页面表单提交：因为需要上传头像图片，应用到了H5新API--FormData对象+axios，将表单数据传输到后端
+        * 后端会传给一个cookie给前端，提醒用户成功与错误状态，提升体验
+    * 登陆页面表单提交：表单页面提交与注册页类似
+        * 登陆成功后跳转到用户中心界面
+    * 用户中心界面：通过axios的GET请求获取登陆用户账号信息并渲染到页面上，此页面还可进行退出登陆的操作
+* 日记系统的实现
+    * 增加日记的实现：表单提交，通过axios的POST请求将新增数据传到后端
+    * 日记列表的实现：通过axios的GET请求将后端数据返回，并在页面上渲染
+        * 点击某个日记时，跳转更新页面，同时将日记ID用vuex传递给更新组件
+    * 更新日记的实现：表单提交，通过axios的POST请求将更新数据传到后端
+    * 删除日记的实现：将此日记ID通过axios的GET请求传给后台

@@ -30,7 +30,6 @@ app.use(session({
     })
 }));
 //使用此flash中间件，使用了它之后会在请求对象上多一个flash属性，flash是一个方法，传两个参数表示存储消息，传一个参数表示读取消息，读取之后立刻销毁
-//app.use(flash(type,msg));app.use(flash(type));
 app.use(flash());
 
 //给模版附一些公共的变量
@@ -51,10 +50,6 @@ app.use('/user',user);
 //日记路由
 let diary=require('./routes/diary');
 app.use('/user',diary);
-/*
-//放首页路由
-let index=require('./routes/index');
-app.use('/',index);*/
 
 //监听9090端口
 app.listen(9090,()=>{
